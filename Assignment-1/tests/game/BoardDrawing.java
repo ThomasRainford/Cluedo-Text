@@ -3,45 +3,15 @@ package game;
 import board.Board;
 import board.Room;
 import board.token.Player;
-import board.token.Weapon;
 import cards.CharacterCard;
 import cards.RoomCard;
 import cards.WeaponCard;
 import org.junit.jupiter.api.Test;
 
-import java.io.InputStream;
-import java.util.Scanner;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class BoardDrawing {
-
-//    String layout =
-//            "=======1======2=========\n" +
-//            "=======##=====###=======\n" +
-//            "=KKKK=##=BBBBBB=##=CCCC=\n" +
-//            "=KKKK=##=BBBBBB=##=CCCC=\n" +
-//            "=KKKK=##=BBBBBB=##=CCC9=\n" +
-//            "=KKK7=###BBBBBB#####====\n" +
-//            "===#==##=BBBBB8=#######3\n" +
-//            "=#######=#===#==#######=\n" +
-//            "=#################======\n" +
-//            "========##########=IIII=\n" +
-//            "=DDDDDD=###########III11=\n" +
-//            "=DDDDDD###########=IIII=\n" +
-//            "=DDDDDD=##########===#==\n" +
-//            "=DDDDDD=###############4\n" +
-//            "=DDDDD10=#########===#===\n" +
-//            "=====#==##########=LLLL=\n" +
-//            "=#################LLLL12=\n" +
-//            "6#########==##==##=LLLL=\n" +
-//            "=#########=HHHH=###=====\n" +
-//            "====#===##=HHHH=#######=\n" +
-//            "=OOOOO=###=HHHH=##=#====\n" +
-//            "=OOOOO=###=HHHH=##=SSSS=\n" +
-//            "=OOOOO=###=HHHH=##=SSSS=\n" +
-//            "=OOOOO=###=HHHH=##=SSSS=\n" +
-//            "========5===============\n";
 
 
     /**

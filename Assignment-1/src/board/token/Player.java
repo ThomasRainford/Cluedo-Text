@@ -27,7 +27,7 @@ public class Player extends Token{
     private boolean didMove;
     private boolean stopMoves;
 
-    private List<Location> turnLocations = new ArrayList<>();; // keeps track of a players locations during a turn
+    private List<Location> turnLocations = new ArrayList<>(); // keeps track of a players locations during a turn
 
     public Player(String name, Location location) {
         super(name, location);
@@ -85,6 +85,7 @@ public class Player extends Token{
         if(!stopMoves && this.getLocation().isRoom()){
             doPlayerRoomMoves(board, sc, numberMoves);
         }
+        turnLocations = new ArrayList<>();
     }
 
 

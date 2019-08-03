@@ -77,11 +77,18 @@ public class Game {
                             break;
 
                         } else { // user made incorrect accusation so is removed from the game
+                            playersTemp = new ArrayList<>();
                             System.out.println("Incorrect Accusation!");
                             playersTemp.addAll(players);
                             playersTemp.remove(player);
                             System.out.println(player.getName() + " is out of the game!");
                             lost = true;
+
+                            if(playersTemp.size() == 1){
+                                winner = playersTemp.get(0);
+                                won = true;
+                                break;
+                            }
                         }
                     }
                 }
@@ -91,7 +98,7 @@ public class Game {
                 lost = false;
             }
         }
-        System.out.println(winner.getName() + " has won!");
+        System.out.println("\n" + winner.getName() + " has won!");
         printMurder();
 
     }
@@ -408,8 +415,16 @@ public class Game {
         // ask each player to refute if they can
         for(Player refuter : players){
             if(refuter != player) {
+
+                String response;
+                do {
+                    System.out.print(refuter.getName() + "'s turn to refute(ok): ");
+                    response = sc.nextLine();
+
+                } while (!response.equals("ok"));
+                Game.clearConsole();
+
                 action.printSuggestion();
-                System.out.println(refuter.getName() + "'s turn to refute");
                 refuter.printPlayerHand();
 
                 // check if player can refute
@@ -433,14 +448,22 @@ public class Game {
                     } while (!reveal.equals("y"));
                     System.out.println(refutationCard);
 
+                    // delay for 2 seconds before clearing console
+                    try {
+                        Thread.sleep(2000);
+                    } catch (InterruptedException e){
+                        System.out.println(e);
+                    }
+                    Game.clearConsole();
+
 
                 } else { // player cant refute
-                    String response;
+                    String response1;
                     do {
                         System.out.print(refuter.getName() + " can't refute(ok): ");
-                        response = sc.nextLine();
+                        response1 = sc.nextLine();
 
-                    } while (!response.equals("ok"));
+                    } while (!response1.equals("ok"));
                 }
             }
 
@@ -467,8 +490,9 @@ public class Game {
      * Shouldn't be used until a player makes an accusation
      */
     private void printMurder() {
+        System.out.print("\nThe Murder was: ");
         for (Card card : murder) {
-            System.out.print(card.getName() + ", ");
+            System.out.print(card.getName() + " ");
         }
         System.out.println();
     }
