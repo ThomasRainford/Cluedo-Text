@@ -1,20 +1,20 @@
 package board;
 
-import game.Player;
+import board.token.Token;
 
 public abstract class Location {
 
     private int x;
     private int y;
     private String name;
-    private Player player;
+    private Token token;
     private boolean accessible;
 
-    public Location(int x, int y, String name, Player player, boolean accessible){
+    public Location(int x, int y, String name, Token token, boolean accessible){
         this.x = x;
         this.y = y;
         this.name = name;
-        this.player = player;
+        this.token = token;
         this.accessible = accessible;
     }
 
@@ -53,16 +53,16 @@ public abstract class Location {
         this.name = name;
     }
 
-    public Player getPlayer() {
-        return player;
+    public Token getToken() {
+        return token;
     }
 
     public boolean isAccessible() {
         return accessible;
     }
 
-    public void setPlayer(Player player) {
-        this.player = player;
+    public void setBoardToken(Token token) {
+        this.token = token;
     }
 
     public void setAccessible(boolean accessible) {

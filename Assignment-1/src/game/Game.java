@@ -1,6 +1,8 @@
 package game;
 
 import board.*;
+import board.token.Player;
+import board.token.Weapon;
 import cards.Card;
 import cards.CharacterCard;
 import cards.RoomCard;
@@ -8,9 +10,13 @@ import cards.WeaponCard;
 
 import java.util.*;
 
+/**
+ *
+ */
 public class Game {
 
     private List<Player> players;
+    private List<Weapon> weapons;
     private List<Card> cards;            // cards in play
     private List<Card> allCards;         // all cards including murder cards
     private Board board = new Board();
@@ -20,7 +26,7 @@ public class Game {
     private List<Card> murder;
 
     public Game() {
-        play();
+
     }
 
 
@@ -96,7 +102,7 @@ public class Game {
      * getting user input for the games parameters
      * i.e. The number of players
      */
-    private void setupGame() {
+    public void setupGame() {
         Scanner sc = new Scanner(System.in);
         int numberPlayers;
         do {
@@ -107,7 +113,8 @@ public class Game {
 
 
         initialisePlayers(numberPlayers);
-        board.setupBoard(players, numberPlayers);
+        initialiseWeapons();
+        board.setupBoard(players, weapons, numberPlayers);
         initialiseCards(numberPlayers);
         board.printBoard();
     }
@@ -131,7 +138,7 @@ public class Game {
      * Initialise all the player objects and remove a
      * specified number
      */
-    private void initialisePlayers(int numberPlayers) {
+    public void initialisePlayers(int numberPlayers) {
         players = new ArrayList<>();
 
         players.add(new Player("Mrs. White", null));
@@ -147,11 +154,25 @@ public class Game {
         }
     }
 
+    /**
+     * Initialises all Weapon Tokens
+     */
+    public void initialiseWeapons(){
+        weapons = new ArrayList<>();
+
+        weapons.add(new Weapon("Candlestick", null));
+        weapons.add(new Weapon("Dagger", null));
+        weapons.add(new Weapon("Lead Pipe", null));
+        weapons.add(new Weapon("Revolver", null));
+        weapons.add(new Weapon("Rope", null));
+        weapons.add(new Weapon("Spanner", null));
+    }
+
 
     /**
      * Initialise all the card objects
      */
-    private void initialiseCards(int numberPlayers) {
+    public void initialiseCards(int numberPlayers) {
         cards = new ArrayList<>();
         allCards = new ArrayList<>();
 
@@ -258,7 +279,7 @@ public class Game {
 
 
     /**
-     * Do action
+     * Get the action the player wants to do
      */
     private Suggestion getAction(Player player, Scanner sc){
         // ask player to make Suggestion or accusation
@@ -271,10 +292,12 @@ public class Game {
         // player chose Suggestion
         if(action.equals("s")) {
             Suggestion suggestion = doAction(player, sc, true);
-            board.movePlayerToRoom(suggestion.getCharacterCard().getPlayer(players), (Room) player.getLocation(), players);
+
+            // move the suggested player and weapon into the current players room
+            board.movePlayerToRoom(suggestion.getCharacterCard().getToken(players), (Room) player.getLocation(), players);
+            board.moveWeaponToRoom(suggestion.getWeaponCard().getToken(weapons), (Room) player.getLocation());
 
             return suggestion;
-
 
         } else { // player chose accusation
            return doAction(player, sc, false);
@@ -316,9 +339,9 @@ public class Game {
 
         } while (!isValidWeaponCard(weapon));
 
-        cc = player.getCardByName(character, allCards);
-        rc = player.getCardByName(room, allCards);
-        wc = player.getCardByName(weapon, allCards);
+        cc = (CharacterCard) player.getCardByName(character, allCards);
+        rc = (RoomCard) player.getCardByName(room, allCards);
+        wc = (WeaponCard) player.getCardByName(weapon, allCards);
 
         return new Suggestion(cc, rc, wc, isSuggestion);
     }
@@ -349,23 +372,6 @@ public class Game {
     private boolean isValidCharacterCard(String cardName){
         for(Card card : allCards){
             if(card instanceof CharacterCard && card.getName().equals(cardName)){
-                return true;
-            }
-        }
-        return false;
-    }
-
-
-    /**
-     * Checks if the name given matches the name of a
-     * RoomCard
-     *
-     * @param cardName - the name of the card
-     * @return - if the card is valid
-     */
-    private boolean isValidRoomCard(String cardName){
-        for(Card card : allCards){
-            if(card instanceof RoomCard && card.getName().equals(cardName)){
                 return true;
             }
         }
@@ -407,7 +413,7 @@ public class Game {
                 refuter.printPlayerHand();
 
                 // check if player can refute
-                if(refuter.cantRefute(action)) {
+                if(refuter.canRefute(action)) {
                     String refutationCard;
                     do {
                         System.out.print("Refutation Card: ");
@@ -474,7 +480,64 @@ public class Game {
         }
     }
 
+
+    public List<Player> getPlayers() {
+        return players;
+    }
+
+    public void setPlayers(List<Player> players) {
+        this.players = players;
+    }
+
+    public List<Weapon> getWeapons() {
+        return weapons;
+    }
+
+    public void setWeapons(List<Weapon> weapons) {
+        this.weapons = weapons;
+    }
+
+    public List<Card> getCards() {
+        return cards;
+    }
+
+    public void setCards(List<Card> cards) {
+        this.cards = cards;
+    }
+
+    public List<Card> getAllCards() {
+        return allCards;
+    }
+
+    public void setAllCards(List<Card> allCards) {
+        this.allCards = allCards;
+    }
+
+    public Board getBoard() {
+        return board;
+    }
+
+    public void setBoard(Board board) {
+        this.board = board;
+    }
+
+    public Player getWinner() {
+        return winner;
+    }
+
+    public void setWinner(Player winner) {
+        this.winner = winner;
+    }
+
+    public List<Card> getMurder() {
+        return murder;
+    }
+
+    public void setMurder(List<Card> murder) {
+        this.murder = murder;
+    }
+
     public static void main(String[] args) {
-        new Game();
+        new Game().play();
     }
 }

@@ -1,6 +1,7 @@
 package board;
 
-import game.Player;
+import board.token.Player;
+import board.token.Weapon;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -16,12 +17,11 @@ public class Board {
     private List<Location> rooms;
 
 
-    public Board(){
+    public Board() {
 
         board = new Location[x][y];
     }
 
-    //TODO: add weapon tokens and allow them to be moved to a Room
 
 
     /**
@@ -29,19 +29,42 @@ public class Board {
      * Players cannot move to a wall and cannot move outside of
      * the board.
      *
-     *
      * @param player - the player moving
-     * @param x - x co-ordinate to move too
-     * @param y - y x co-ordinate to move too
+     * @param x      - x co-ordinate to move too
+     * @param y      - y x co-ordinate to move too
      * @return - if the move was valid
      */
-    public boolean movePlayer(Player player, int x, int y){
-        if((x <= 23 && x >= 0) && (y <= 24 && y >= 0) && board[x][y].isAccessible()) {
+    public boolean movePlayer(Player player, int x, int y) {
+        List<Location> previousLocations = player.getTurnLocations();
+        if ((x <= 23 && x >= 0) && (y <= 24 && y >= 0) && board[x][y].isAccessible() && !previousLocations.contains(board[x][y])) {
             Location previous = player.getLocation();
             player.setLocation(board[x][y]);          // set the players location
-            board[x][y].setPlayer(player);            // set the locations player
-            previous.setPlayer(null);                 // set the previous locations player to null
+            board[x][y].setBoardToken(player);            // set the locations player
+            previous.setBoardToken(null);                 // set the previous locations player to null
             previous.setAccessible(true);             // set previous location to accessible
+            return true;
+
+        } else {
+            return false;
+        }
+    }
+
+
+    /**
+     * Move a weapon Token to the specified co-ordinated.
+     *
+     * @param weapon - the weapon token to be moved
+     * @param x - the x co- ordinate on the board
+     * @param y - the y co-ordinate on the board
+     * @return
+     */
+    public boolean moveWeapon(Weapon weapon, int x, int y){
+        if(board[x][y].isAccessible() && board[x][y].isRoom()){
+            Location previous = weapon.getLocation();
+            weapon.setLocation(board[x][y]);
+            board[x][y].setBoardToken(weapon);
+            previous.setBoardToken(null);
+            previous.setAccessible(true);
             return true;
 
         } else {
@@ -53,7 +76,7 @@ public class Board {
     /**
      * creates a text-based Cluedo board
      */
-    public void setupBoard(List<Player> players, int numberPlayers){
+    public void setupBoard(List<Player> players, List<Weapon> weapons, int numberPlayers) {
         File file = new File("C:\\Users\\thoma\\IdeaProjects\\SWEN225\\Assignment-1\\resources\\board-layout.txt");
         rooms = new ArrayList<>();
         int x;
@@ -61,10 +84,10 @@ public class Board {
 
         try {
             Scanner sc = new Scanner(file);
-            while (sc.hasNextLine()){
+            while (sc.hasNextLine()) {
                 String ch = sc.nextLine();
                 x = 0;
-                while(x < 24){
+                while (x < 24) {
                     char c = ch.charAt(x);
                     switch (c) {
                         case '=':
@@ -135,12 +158,14 @@ public class Board {
                 y++;
             }
 
-        } catch (FileNotFoundException e){
+        } catch (FileNotFoundException e) {
             System.out.println(e);
         }
 
-        // setup players
+        // setup players and weapons
         setPLayerLocations(players, numberPlayers);
+        setWeaponLocations(weapons);
+
     }
 
 
@@ -150,7 +175,7 @@ public class Board {
      *
      * @return List of Location's
      */
-    public List<Location> allPlayerLocations(){
+    public List<Location> allPlayerLocations() {
         List<Location> locations = new ArrayList<>();
         locations.add(board[7][0] = new Hallway(7, 0));
         locations.add(board[14][0] = new Hallway(14, 0));
@@ -164,16 +189,48 @@ public class Board {
 
 
     /**
-     * Assign players to locations and assign locations to players
-     * and set there tokens
+     * Returns a List of all the Locations of the Weapon
+     * Tokens in there initial positions
      *
-     * @param players
-     * List of players that will be playable
+     * @return - A List of Locations
      */
-    public void setPLayerLocations(List<Player> players, int numberPlayers){
+    public List<Location> allWeaponLocations() {
+        List<Location> locations = new ArrayList<>();
+        locations.add(board[4][5] = new Room(4, 5, "Kitchen"));
+        locations.add(board[14][6] = new Room(14, 6, "Ball Room"));
+        locations.add(board[22][4] = new Room(22, 3, "Conservatory"));
+        locations.add(board[6][14] = new Room(6, 14, "Dining Room"));
+        locations.add(board[22][10] = new Room(22, 10, "Billiard Room"));
+        locations.add(board[22][16] = new Room(22, 16, "Lounge"));
+
+        return locations;
+    }
+
+
+    /**
+     * Assign Players to locations and assign locations to Players
+     * and set the Players tokens
+     *
+     * @param players List of players that will be playable
+     */
+    public void setPLayerLocations(List<Player> players, int numberPlayers) {
         List<Location> locations = allPlayerLocations();
-        for(int i = 0; i < numberPlayers; i++){
-            setupPlayer(players.get(i), locations.get(i), String.valueOf(i+1));
+        for (int i = 0; i < numberPlayers; i++) {
+            setupPlayer(players.get(i), locations.get(i), String.valueOf(i + 1));
+        }
+    }
+
+
+    /**
+     * Assign Weapons to locations and assign locations to Weapons
+     * and set the Weapons token.
+     *
+     * @param weapons
+     */
+    public void setWeaponLocations(List<Weapon> weapons) {
+        List<Location> locations = allWeaponLocations();
+        for (int i = 0; i < Weapon.NUM_WEAPONS; i++) {
+            setupWeapon(weapons.get(i), locations.get(i), String.valueOf(i + 7));
         }
     }
 
@@ -182,13 +239,28 @@ public class Board {
      * Assigns players location and locations player
      * and sets the players token for the board.
      *
-     * @param player - player to be setup
+     * @param player   - player to be setup
      * @param location - location to assign to player
      */
-    public void setupPlayer(Player player, Location location, String token){
+    public void setupPlayer(Player player, Location location, String token) {
         player.setLocation(location);
-        location.setPlayer(player);
+        location.setBoardToken(player);
         player.setToken(token);
+        location.setAccessible(false);
+    }
+
+
+    /**
+     * Assigns weapons location and locations weapon
+     * and sets the weapons token for the board.
+     *
+     * @param weapon   - weapon to be setup
+     * @param location - location to assign to weapon
+     */
+    public void setupWeapon(Weapon weapon, Location location, String token) {
+        weapon.setLocation(location);
+        location.setBoardToken(weapon);
+        weapon.setToken(token);
         location.setAccessible(false);
     }
 
@@ -196,51 +268,51 @@ public class Board {
     /**
      * Print the board
      */
-    public void printBoard(){
-        for(int y = 0; y < 25; y++){
-            for(int x = 0; x < 24; x++){
+    public void printBoard() {
+        for (int y = 0; y < 25; y++) {
+            for (int x = 0; x < 24; x++) {
                 Location location = board[x][y];
-                if(location instanceof Wall){
+                if (location instanceof Wall) {
                     System.out.print("=");
 
-                } else if(location instanceof Hallway) {
+                } else if (location instanceof Hallway) {
                     // check for a player. Print player token or hallway token.
-                    if (location.getPlayer() != null) {
-                        System.out.print(location.getPlayer().getToken());
+                    if (location.getToken() != null) {
+                        System.out.print(location.getToken().getToken());
 
                     } else {
                         System.out.print("#");
                     }
 
                     // check for a player in a Room
-                } else if (location instanceof Room && location.getPlayer() != null){
-                    System.out.print(location.getPlayer().getToken());
+                } else if (location instanceof Room && location.getToken() != null) {
+                    System.out.print(location.getToken().getToken());
 
-                } else if(location.getName().equals("Kitchen")){
+                } else if (location.getName().equals("Kitchen")) {
                     System.out.print("K");
 
-                } else if(location.getName().equals("Ball Room")){
+                } else if (location.getName().equals("Ball Room")) {
                     System.out.print("B");
 
-                } else if(location.getName().equals("Conservatory")){
+                } else if (location.getName().equals("Conservatory")) {
                     System.out.print("C");
 
-                } else if(location.getName().equals("Dining Room")){
+                } else if (location.getName().equals("Dining Room")) {
                     System.out.print("D");
 
-                } else if(location.getName().equals("Billiard Room")){
+                } else if (location.getName().equals("Billiard Room")) {
                     System.out.print("I");
 
-                } else if(location.getName().equals("Library")){
+                } else if (location.getName().equals("Library")) {
                     System.out.print("L");
 
-                } else if(location.getName().equals("Lounge")) {
+                } else if (location.getName().equals("Lounge")) {
                     System.out.print("O");
 
-                } else if(location.getName().equals("Hall")){
+                } else if (location.getName().equals("Hall")) {
                     System.out.print("H");
 
-                } else if(location.getName().equals("Study")){
+                } else if (location.getName().equals("Study")) {
                     System.out.print("S");
 
                 }
@@ -249,15 +321,100 @@ public class Board {
         }
     }
 
+    /**
+     *
+     * @return - the board as a String
+     */
+    public String getBoardAsString(){
+        StringBuilder boardLayout = new StringBuilder();
+        for (int y = 0; y < 25; y++) {
+            for (int x = 0; x < 24; x++) {
+                Location location = board[x][y];
+                if (location instanceof Wall) {
+                    boardLayout.append("=");
 
-    public void movePlayerToRoom(Player player, Room goToRoom, List<Player> players){
-        if(players.contains(player)) {
+                } else if (location instanceof Hallway) {
+                    // check for a player. Print player token or hallway token.
+                    if (location.getToken() != null) {
+                        boardLayout.append(location.getToken().getToken());
+
+                    } else {
+                        boardLayout.append("#");
+                    }
+
+                    // check for a player in a Room
+                } else if (location instanceof Room && location.getToken() != null) {
+                    boardLayout.append(location.getToken().getToken());
+
+                } else if (location.getName().equals("Kitchen")) {
+                    boardLayout.append("K");
+
+                } else if (location.getName().equals("Ball Room")) {
+                    boardLayout.append("B");
+
+                } else if (location.getName().equals("Conservatory")) {
+                    boardLayout.append("C");
+
+                } else if (location.getName().equals("Dining Room")) {
+                    boardLayout.append("D");
+
+                } else if (location.getName().equals("Billiard Room")) {
+                    boardLayout.append("I");
+
+                } else if (location.getName().equals("Library")) {
+                    boardLayout.append("L");
+
+                } else if (location.getName().equals("Lounge")) {
+                    boardLayout.append("O");
+
+                } else if (location.getName().equals("Hall")) {
+                    boardLayout.append("H");
+
+                } else if (location.getName().equals("Study")) {
+                    boardLayout.append("S");
+                }
+            }
+            boardLayout.append("\n");
+        }
+        return boardLayout.toString();
+    }
+
+
+    /**
+     * If the specified player is in a Room then the player can be moved to
+     * the specified Room
+     *
+     * @param player - the player to be Moved
+     * @param goToRoom - the Room to move the player too.
+     * @param players - the list of all players on the board.
+     */
+    public void movePlayerToRoom(Player player, Room goToRoom, List<Player> players) {
+        if (players.contains(player)) {
             for (Location room : rooms) {
                 if (room.getName().equals(goToRoom.getName())) {
-                    if (room.getPlayer() == null) {
+                    if (room.getToken() == null) {
                         movePlayer(player, room.getX(), room.getY());
                         break;
                     }
+                }
+            }
+        }
+    }
+
+
+    /**
+     * If the specified weapon is in a Room then the weapon can be moved to
+     * the specified Room
+     *
+     * @param weapon - the player to be Moved
+     * @param goToRoom - the Room to move the player too.
+     */
+    public void moveWeaponToRoom(Weapon weapon, Room goToRoom) {
+        for (Location room : rooms) {
+            if (room.getName().equals(goToRoom.getName())) {
+                if (room.getToken() == null) {
+                    moveWeapon(weapon, room.getX(), room.getY());
+                    break;
                 }
             }
         }
@@ -290,7 +447,6 @@ public class Board {
     public void setBoard(Location[][] board) {
         this.board = board;
     }
-
 
 
 }
