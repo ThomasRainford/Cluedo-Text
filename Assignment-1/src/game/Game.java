@@ -63,7 +63,7 @@ public class Game {
 
                 // check if player is in a room
                 if(player.getLocation().isRoom()){
-                    System.out.println(player.getName() + " is in a Room.");
+                    System.out.println(player.getName() + " is in a Room.\n");
                     Suggestion action = getAction(player, sc);
 
                     // user made an suggestion
@@ -296,6 +296,8 @@ public class Game {
             action = sc.next();
 
         } while (!action.equals("s") && !action.equals("a"));
+        sc.nextLine();
+
         // player chose Suggestion
         if(action.equals("s")) {
             Suggestion suggestion = doAction(player, sc, true);
@@ -333,7 +335,7 @@ public class Game {
 
         } while (!isValidCharacterCard(character));
 
-        // ask for RoomCard
+        // RoomCard
         String room = player.getLocation().getName();
         System.out.println("Room: " + room);
 
@@ -509,32 +511,8 @@ public class Game {
         return players;
     }
 
-    public void setPlayers(List<Player> players) {
-        this.players = players;
-    }
-
     public List<Weapon> getWeapons() {
         return weapons;
-    }
-
-    public void setWeapons(List<Weapon> weapons) {
-        this.weapons = weapons;
-    }
-
-    public List<Card> getCards() {
-        return cards;
-    }
-
-    public void setCards(List<Card> cards) {
-        this.cards = cards;
-    }
-
-    public List<Card> getAllCards() {
-        return allCards;
-    }
-
-    public void setAllCards(List<Card> allCards) {
-        this.allCards = allCards;
     }
 
     public Board getBoard() {
@@ -543,22 +521,6 @@ public class Game {
 
     public void setBoard(Board board) {
         this.board = board;
-    }
-
-    public Player getWinner() {
-        return winner;
-    }
-
-    public void setWinner(Player winner) {
-        this.winner = winner;
-    }
-
-    public List<Card> getMurder() {
-        return murder;
-    }
-
-    public void setMurder(List<Card> murder) {
-        this.murder = murder;
     }
 
     public static void main(String[] args) {

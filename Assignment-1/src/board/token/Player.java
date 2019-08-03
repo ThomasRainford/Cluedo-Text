@@ -99,7 +99,6 @@ public class Player extends Token{
      *                    player leaves the Room.
      */
     public void doPlayerRoomMoves(Board board, Scanner sc, int numberMoves){
-        System.out.println("In doPlayerRoomMoves()");
         String direction;
         do {
             direction = printMoveInformation(sc);
@@ -233,7 +232,7 @@ public class Player extends Token{
     private String printMoveInformation(Scanner sc){
         this.printPlayerHand();
         System.out.print("Direction: ");
-        String direction = sc.next();
+        String direction = sc.nextLine();
         Game.clearConsole();
         System.out.println("-------" + this.getName() + "-------");
         didMove = false;
