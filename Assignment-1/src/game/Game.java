@@ -313,7 +313,7 @@ public class Game {
      * @param isSuggestion - if action is a suggestion or accusation
      * @return - the action (Suggestion)
      */
-    private Suggestion doAction(Player player, Scanner sc, boolean isSuggestion) {
+    public Suggestion doAction(Player player, Scanner sc, boolean isSuggestion) {
         CharacterCard cc;
         RoomCard rc;
         WeaponCard wc;
