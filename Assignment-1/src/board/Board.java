@@ -5,6 +5,7 @@ import board.token.Weapon;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -72,11 +73,17 @@ public class Board {
     }
 
 
+    private File getBoardLayout(String fileName) {
+        return new File(getClass().getClassLoader().getResource(fileName).getFile());
+
+    }
+
+
     /**
      * creates a text-based Cluedo board
      */
     public void setupBoard(List<Player> players, List<Weapon> weapons, int numberPlayers) {
-        File file = new File("C:\\Users\\thoma\\IdeaProjects\\SWEN225\\Assignment-1\\resources\\board-layout.txt");
+        File file = getBoardLayout("board-layout.txt");
         rooms = new ArrayList<>();
         int x;
         int y = 0;
