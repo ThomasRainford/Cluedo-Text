@@ -21,7 +21,7 @@ class MainGameFunctions {
      * the player from being removed from the game
      */
     @Test
-    public void testIncorrectAccusation(){
+    public void testIncorrectAccusation() {
         Game game = new Game();
         Board b = setupGame(game, 6);
         Player player = game.getPlayers().get(0);
@@ -39,7 +39,7 @@ class MainGameFunctions {
      * Test a correct accusation
      */
     @Test
-    public void testCorrectAccusation(){
+    public void testCorrectAccusation() {
         Game game = new Game();
         Board b = setupGame(game, 6);
         Player player = game.getPlayers().get(0);
@@ -65,7 +65,7 @@ class MainGameFunctions {
      * Test win scenario when players makes correct accusation
      */
     @Test
-    public void testWinScenario_1(){
+    public void testWinScenario_1() {
         Game game = new Game();
         Board b = setupGame(game, 6);
         Player player = game.getPlayers().get(0);
@@ -95,7 +95,7 @@ class MainGameFunctions {
      * Test win scenario where one player remains
      */
     @Test
-    public void testWinScenario_2(){
+    public void testWinScenario_2() {
         Game game = new Game();
         Board b = setupGame(game, 3);
         Player player_1 = game.getPlayers().get(0);
@@ -138,7 +138,7 @@ class MainGameFunctions {
      * Test CharacterCard validation
      */
     @Test
-    public void testCharacterCardValidation(){
+    public void testCharacterCardValidation() {
         Game game = new Game();
         setupGame(game, 3);
 
@@ -160,7 +160,7 @@ class MainGameFunctions {
      * Test WeaponCard validation
      */
     @Test
-    public void testWeaponCardValidation(){
+    public void testWeaponCardValidation() {
         Game game = new Game();
         setupGame(game, 3);
 
@@ -179,13 +179,12 @@ class MainGameFunctions {
     }
 
 
-
     /**
      * Sets up a game by initialising Tokens and locations
      *
      * @param game
      */
-    public Board setupGame(Game game, int numberPlayer){
+    public Board setupGame(Game game, int numberPlayer) {
         game.initialisePlayers(numberPlayer);
         game.initialiseWeapons();
         game.getBoard().setupBoard(game.getPlayers(), game.getWeapons(), numberPlayer);

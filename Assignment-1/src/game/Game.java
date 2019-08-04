@@ -61,17 +61,17 @@ public class Game {
                 player.doPlayerMoves(board, diceValue);
 
                 // check if player is in a room
-                if(player.getLocation().isRoom()){
+                if (player.getLocation().isRoom()) {
                     System.out.println(player.getName() + " is in a Room.\n");
                     Suggestion action = getAction(player, sc);
 
                     // user made an suggestion
-                    if(action.isSuggestion()) {
+                    if (action.isSuggestion()) {
                         doRefutation(player, action, sc);
 
                     } else { // user made an accusation
                         boolean outcome = doAccusation(action, player);
-                        if(outcome){
+                        if (outcome) {
                             won = true;
                         }
                         break;
@@ -81,7 +81,6 @@ public class Game {
         }
         System.out.println("\n" + winner.getName() + " has won!");
         printMurder();
-
     }
 
 
@@ -99,7 +98,6 @@ public class Game {
 
         } while (numberPlayers < 3 || numberPlayers > 6);
 
-
         initialisePlayers(numberPlayers);
         initialiseWeapons();
         board.setupBoard(players, weapons, numberPlayers);
@@ -110,7 +108,7 @@ public class Game {
 
     /**
      * Rolls the dice.
-     *
+     * <p>
      * Gets two random number between 1 and 6 then adds them together
      */
     private int rollDice() {
@@ -145,7 +143,7 @@ public class Game {
     /**
      * Initialises all Weapon Tokens
      */
-    public void initialiseWeapons(){
+    public void initialiseWeapons() {
         weapons = new ArrayList<>();
 
         weapons.add(new Weapon("Candlestick", null));
@@ -195,14 +193,14 @@ public class Game {
         allCards.addAll(cards);
 
         System.out.println("ALL CARDS:");
-        for(Card card : allCards){
+        for (Card card : allCards) {
             System.out.print(card.getName() + " ");
         }
 
         // set the murder cards and deal remaining cards
         setMurder();
         System.out.print("MURDER: ");
-        for(Card card : murder){
+        for (Card card : murder) {
             System.out.print(card.getName() + " ");
         }
         System.out.println();
@@ -269,7 +267,7 @@ public class Game {
     /**
      * Get the action the player wants to do
      */
-    private Suggestion getAction(Player player, Scanner sc){
+    private Suggestion getAction(Player player, Scanner sc) {
         // ask player to make Suggestion or accusation
         String action;
         do {
@@ -280,7 +278,7 @@ public class Game {
         sc.nextLine();
 
         // player chose Suggestion
-        if(action.equals("s")) {
+        if (action.equals("s")) {
             Suggestion suggestion = doAction(player, sc, true);
 
             // move the suggested player and weapon into the current players room
@@ -290,7 +288,7 @@ public class Game {
             return suggestion;
 
         } else { // player chose accusation
-           return doAction(player, sc, false);
+            return doAction(player, sc, false);
         }
     }
 
@@ -298,8 +296,8 @@ public class Game {
      * ask user for a suggestion by asking for each of
      * the three types of cards
      *
-     * @param player - player making an action
-     * @param sc - scanner
+     * @param player       - player making an action
+     * @param sc           - scanner
      * @param isSuggestion - if action is a suggestion or accusation
      * @return - the action (Suggestion)
      */
@@ -319,7 +317,6 @@ public class Game {
         // RoomCard
         String room = player.getLocation().getName();
         System.out.println("Room: " + room);
-
 
         // ask for WeaponCard
         String weapon;
@@ -343,7 +340,7 @@ public class Game {
      * @param accusation - the Suggestion (accusation) made by the player
      * @return - if the accusation was correct
      */
-    public boolean correctAccusation(Suggestion accusation){
+    public boolean correctAccusation(Suggestion accusation) {
         CharacterCard cc = accusation.getCharacterCard();
         RoomCard rc = accusation.getRoomCard();
         WeaponCard wc = accusation.getWeaponCard();
@@ -359,9 +356,9 @@ public class Game {
      * @param cardName - the name of the card
      * @return - if the card is valid
      */
-    public boolean isValidCharacterCard(String cardName){
-        for(Card card : allCards){
-            if(card instanceof CharacterCard && card.getName().equals(cardName)){
+    public boolean isValidCharacterCard(String cardName) {
+        for (Card card : allCards) {
+            if (card instanceof CharacterCard && card.getName().equals(cardName)) {
                 return true;
             }
         }
@@ -376,9 +373,9 @@ public class Game {
      * @param cardName - the name of the card
      * @return - if the card is valid
      */
-    public boolean isValidWeaponCard(String cardName){
-        for(Card card : allCards){
-            if(card instanceof WeaponCard && card.getName().equals(cardName)){
+    public boolean isValidWeaponCard(String cardName) {
+        for (Card card : allCards) {
+            if (card instanceof WeaponCard && card.getName().equals(cardName)) {
                 return true;
             }
         }
@@ -386,18 +383,17 @@ public class Game {
     }
 
 
-
     /**
      * Does the refutation logic
      *
      * @param player - player who made the suggestion
      * @param action - the suggestion
-     * @param sc - scanner
+     * @param sc     - scanner
      */
-    private void doRefutation(Player player, Suggestion action, Scanner sc){
+    private void doRefutation(Player player, Suggestion action, Scanner sc) {
         // ask each player to refute if they can
-        for(Player refuter : players){
-            if(refuter != player) {
+        for (Player refuter : players) {
+            if (refuter != player) {
 
                 String response;
                 do {
@@ -411,7 +407,7 @@ public class Game {
                 refuter.printPlayerHand();
 
                 // check if player can refute
-                if(refuter.canRefute(action)) {
+                if (refuter.canRefute(action)) {
                     String refutationCard;
                     do {
                         System.out.print("Refutation Card: ");
@@ -431,13 +427,7 @@ public class Game {
                     } while (!reveal.equals("y"));
                     System.out.println(refutationCard);
 
-                    // delay for 2 seconds before clearing console
-                    try {
-                        Thread.sleep(2000);
-                    } catch (InterruptedException e){
-                        System.out.println(e);
-                    }
-                    Game.clearConsole();
+                    delay();
 
 
                 } else { // player cant refute
@@ -449,13 +439,11 @@ public class Game {
                     } while (!response1.equals("ok"));
                 }
             }
-
         }
     }
 
 
-
-    public List<Player> incorrectAccusation(Player player){
+    public List<Player> incorrectAccusation(Player player) {
         System.out.println("Incorrect Accusation!");
         playersTemp.addAll(players);
         playersTemp.remove(player);
@@ -466,19 +454,18 @@ public class Game {
     }
 
 
-    public boolean doAccusation(Suggestion action, Player player){
+    public boolean doAccusation(Suggestion action, Player player) {
         boolean won;
         if (correctAccusation(action)) { // user made correct accusation so has won
             winner = player;
             won = true;
-
 
         } else { // user made incorrect accusation so is removed from the game
             playersTemp = incorrectAccusation(player);
             players = playersTemp;
             won = false;
 
-            if(playersTemp.size() == 1){
+            if (playersTemp.size() == 1) {
                 winner = playersTemp.get(0);
                 won = true;
             }
@@ -511,6 +498,19 @@ public class Game {
             System.out.print(card.getName() + " ");
         }
         System.out.println();
+    }
+
+
+    /**
+     * Two second delay then clear console
+     */
+    public void delay(){
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            System.out.println(e);
+        }
+        Game.clearConsole();
     }
 
 

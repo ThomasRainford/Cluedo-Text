@@ -23,7 +23,6 @@ public class Board {
     }
 
 
-
     /**
      * Moves the specified player to he specified co-ordinates
      * Players cannot move to a wall and cannot move outside of
@@ -54,12 +53,12 @@ public class Board {
      * Move a weapon Token to the specified co-ordinated.
      *
      * @param weapon - the weapon token to be moved
-     * @param x - the x co- ordinate on the board
-     * @param y - the y co-ordinate on the board
+     * @param x      - the x co- ordinate on the board
+     * @param y      - the y co-ordinate on the board
      * @return
      */
-    public boolean moveWeapon(Weapon weapon, int x, int y){
-        if(board[x][y].isAccessible() && board[x][y].isRoom()){
+    public boolean moveWeapon(Weapon weapon, int x, int y) {
+        if (board[x][y].isAccessible() && board[x][y].isRoom()) {
             Location previous = weapon.getLocation();
             weapon.setLocation(board[x][y]);
             board[x][y].setBoardToken(weapon);
@@ -322,10 +321,9 @@ public class Board {
     }
 
     /**
-     *
      * @return - the board as a String
      */
-    public String getBoardAsString(){
+    public String getBoardAsString() {
         StringBuilder boardLayout = new StringBuilder();
         for (int y = 0; y < 25; y++) {
             for (int x = 0; x < 24; x++) {
@@ -384,9 +382,9 @@ public class Board {
      * If the specified player is in a Room then the player can be moved to
      * the specified Room
      *
-     * @param player - the player to be Moved
+     * @param player   - the player to be Moved
      * @param goToRoom - the Room to move the player too.
-     * @param players - the list of all players on the board.
+     * @param players  - the list of all players on the board.
      */
     public void movePlayerToRoom(Player player, Room goToRoom, List<Player> players) {
         if (players.contains(player)) {
@@ -406,7 +404,7 @@ public class Board {
      * If the specified weapon is in a Room then the weapon can be moved to
      * the specified Room
      *
-     * @param weapon - the player to be Moved
+     * @param weapon   - the player to be Moved
      * @param goToRoom - the Room to move the player too.
      */
     public void moveWeaponToRoom(Weapon weapon, Room goToRoom) {

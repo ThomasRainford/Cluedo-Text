@@ -10,7 +10,7 @@ public abstract class Location {
     private Token token;
     private boolean accessible;
 
-    public Location(int x, int y, String name, Token token, boolean accessible){
+    public Location(int x, int y, String name, Token token, boolean accessible) {
         this.x = x;
         this.y = y;
         this.name = name;
@@ -23,7 +23,7 @@ public abstract class Location {
      *
      * @return
      */
-    public boolean isRoom(){
+    public boolean isRoom() {
         return this instanceof Room;
     }
 

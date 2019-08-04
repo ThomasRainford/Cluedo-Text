@@ -21,7 +21,7 @@ import java.util.Scanner;
  * Miss Scarlett:  24, 8   token: 5
  * Col. Mustard:   0, 17   token: 6
  */
-public class Player extends Token{
+public class Player extends Token {
     private List<Card> hand;
 
     private boolean didMove;
@@ -56,8 +56,8 @@ public class Player extends Token{
         while (i < numberMoves) {
             Location current = this.getLocation();
 
-            if(current.isRoom()){
-                doPlayerRoomMoves(board, sc, numberMoves-i+1);
+            if (current.isRoom()) {
+                doPlayerRoomMoves(board, sc, numberMoves - i + 1);
                 break;
             }
 
@@ -82,7 +82,7 @@ public class Player extends Token{
             printLocation(this);
         }
 
-        if(!stopMoves && this.getLocation().isRoom()){
+        if (!stopMoves && this.getLocation().isRoom()) {
             doPlayerRoomMoves(board, sc, numberMoves);
         }
         turnLocations = new ArrayList<>();
@@ -93,24 +93,24 @@ public class Player extends Token{
      * Controls the players moves in a Room
      * There is no limit to the number of moves in a Room
      *
-     * @param board - the current board
-     * @param sc - scanner
+     * @param board       - the current board
+     * @param sc          - scanner
      * @param numberMoves - the number of moves to do when the
      *                    player leaves the Room.
      */
-    public void doPlayerRoomMoves(Board board, Scanner sc, int numberMoves){
+    public void doPlayerRoomMoves(Board board, Scanner sc, int numberMoves) {
         String direction;
         do {
             direction = printMoveInformation(sc);
             getMoveDirection(direction, this.getLocation(), board);
             board.printBoard();
             printLocation(this);
-            if(!this.getLocation().isRoom()){
+            if (!this.getLocation().isRoom()) {
                 doPlayerMoves(board, numberMoves);
                 break;
             }
 
-        } while(!direction.equals("q"));
+        } while (!direction.equals("q"));
     }
 
 
@@ -120,8 +120,8 @@ public class Player extends Token{
      * to keep track of all visited Locations in that turn.
      *
      * @param direction - the direction the player wants to move in.
-     * @param current - the players current location
-     * @param board - the current board
+     * @param current   - the players current location
+     * @param board     - the current board
      */
     public void getMoveDirection(String direction, Location current, Board board) {
         switch (direction) {
@@ -171,7 +171,7 @@ public class Player extends Token{
      * cards in the suggestion.
      *
      * @param suggestion - the Suggestion
-     * @param name - the name of the card inputted
+     * @param name       - the name of the card inputted
      * @return - boolean
      */
     public boolean isSuggestionCard(Suggestion suggestion, String name) {
@@ -209,11 +209,11 @@ public class Player extends Token{
      * Iterated through 'cards' until it finds the card with the name 'name'
      * then returns it.
      *
-     * @param name - the name of the card
+     * @param name  - the name of the card
      * @param cards - the list of all the possible cards
      * @return - the card found
      */
-    public <T extends Card> T getCardByName(String name, List<T> cards){
+    public <T extends Card> T getCardByName(String name, List<T> cards) {
         for (T card : cards) {
             if (card.getName().equals(name)) {
                 return card;
@@ -229,7 +229,7 @@ public class Player extends Token{
      * @param sc - scanner
      * @return - the move direction
      */
-    private String printMoveInformation(Scanner sc){
+    private String printMoveInformation(Scanner sc) {
         this.printPlayerHand();
         System.out.print("Direction: ");
         String direction = sc.nextLine();
