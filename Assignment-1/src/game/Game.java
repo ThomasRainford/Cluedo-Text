@@ -20,10 +20,10 @@ public class Game {
     private List<Card> cards;            // cards in play
     private List<Card> allCards;         // all cards including murder cards
     private Board board = new Board();
-
     private Player winner;
-
     private List<Card> murder;
+
+    private List<Player> playersTemp;
 
     public Game() {
 
@@ -37,10 +37,9 @@ public class Game {
     public void play() {
         setupGame();
         Scanner sc = new Scanner(System.in);
-        ArrayList<Player> playersTemp = new ArrayList<>();
+        playersTemp = new ArrayList<>();
 
         boolean won = false;
-        boolean lost = false;
         while (!won) {
             for (Player player : players) {
                 player.printEndOfTurn();
@@ -71,31 +70,13 @@ public class Game {
                         doRefutation(player, action, sc);
 
                     } else { // user made an accusation
-                        if (correctAccusation(action)) { // user made correct accusation so has won
-                            winner = player;
+                        boolean outcome = doAccusation(action, player);
+                        if(outcome){
                             won = true;
-                            break;
-
-                        } else { // user made incorrect accusation so is removed from the game
-                            playersTemp = new ArrayList<>();
-                            System.out.println("Incorrect Accusation!");
-                            playersTemp.addAll(players);
-                            playersTemp.remove(player);
-                            System.out.println(player.getName() + " is out of the game!");
-                            lost = true;
-
-                            if(playersTemp.size() == 1){
-                                winner = playersTemp.get(0);
-                                won = true;
-                                break;
-                            }
                         }
+                        break;
                     }
                 }
-            }
-            if(lost) {
-                players = playersTemp;
-                lost = false;
             }
         }
         System.out.println("\n" + winner.getName() + " has won!");
@@ -362,7 +343,7 @@ public class Game {
      * @param accusation - the Suggestion (accusation) made by the player
      * @return - if the accusation was correct
      */
-    private boolean correctAccusation(Suggestion accusation){
+    public boolean correctAccusation(Suggestion accusation){
         CharacterCard cc = accusation.getCharacterCard();
         RoomCard rc = accusation.getRoomCard();
         WeaponCard wc = accusation.getWeaponCard();
@@ -378,7 +359,7 @@ public class Game {
      * @param cardName - the name of the card
      * @return - if the card is valid
      */
-    private boolean isValidCharacterCard(String cardName){
+    public boolean isValidCharacterCard(String cardName){
         for(Card card : allCards){
             if(card instanceof CharacterCard && card.getName().equals(cardName)){
                 return true;
@@ -395,7 +376,7 @@ public class Game {
      * @param cardName - the name of the card
      * @return - if the card is valid
      */
-    private boolean isValidWeaponCard(String cardName){
+    public boolean isValidWeaponCard(String cardName){
         for(Card card : allCards){
             if(card instanceof WeaponCard && card.getName().equals(cardName)){
                 return true;
@@ -474,6 +455,39 @@ public class Game {
 
 
 
+    public List<Player> incorrectAccusation(Player player){
+        System.out.println("Incorrect Accusation!");
+        playersTemp.addAll(players);
+        playersTemp.remove(player);
+        System.out.println(player.getName() + " is out of the game!");
+
+        return playersTemp;
+
+    }
+
+
+    public boolean doAccusation(Suggestion action, Player player){
+        boolean won;
+        if (correctAccusation(action)) { // user made correct accusation so has won
+            winner = player;
+            won = true;
+
+
+        } else { // user made incorrect accusation so is removed from the game
+            playersTemp = incorrectAccusation(player);
+            players = playersTemp;
+            won = false;
+
+            if(playersTemp.size() == 1){
+                winner = playersTemp.get(0);
+                won = true;
+            }
+        }
+        return won;
+    }
+
+
+
     /* PRINT METHODS */
 
     /**
@@ -506,6 +520,54 @@ public class Game {
         }
     }
 
+
+    public void setPlayers(List<Player> players) {
+        this.players = players;
+    }
+
+    public void setWeapons(List<Weapon> weapons) {
+        this.weapons = weapons;
+    }
+
+    public List<Card> getCards() {
+        return cards;
+    }
+
+    public void setCards(List<Card> cards) {
+        this.cards = cards;
+    }
+
+    public List<Card> getAllCards() {
+        return allCards;
+    }
+
+    public void setAllCards(List<Card> allCards) {
+        this.allCards = allCards;
+    }
+
+    public Player getWinner() {
+        return winner;
+    }
+
+    public void setWinner(Player winner) {
+        this.winner = winner;
+    }
+
+    public List<Player> getPlayersTemp() {
+        return playersTemp;
+    }
+
+    public void setPlayersTemp(List<Player> playersTemp) {
+        this.playersTemp = playersTemp;
+    }
+
+    public List<Card> getMurder() {
+        return murder;
+    }
+
+    public void setMurder(List<Card> murder) {
+        this.murder = murder;
+    }
 
     public List<Player> getPlayers() {
         return players;
