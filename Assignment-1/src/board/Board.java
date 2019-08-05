@@ -3,12 +3,8 @@ package board;
 import board.token.Player;
 import board.token.Weapon;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 public class Board {
     private static final int x = 24;
@@ -46,7 +42,6 @@ public class Board {
 
 
     public Board() {
-
         board = new Location[x][y];
     }
 

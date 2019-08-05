@@ -25,10 +25,6 @@ public class Game {
 
     private List<Player> playersTemp;
 
-    public Game() {
-
-    }
-
 
     /**
      * Starts the game
@@ -358,7 +354,7 @@ public class Game {
      */
     public boolean isValidCharacterCard(String cardName) {
         for (Card card : allCards) {
-            if (card instanceof CharacterCard && card.getName().equals(cardName)) {
+            if (card instanceof CharacterCard && card.getName().equalsIgnoreCase(cardName)) {
                 return true;
             }
         }
@@ -375,7 +371,7 @@ public class Game {
      */
     public boolean isValidWeaponCard(String cardName) {
         for (Card card : allCards) {
-            if (card instanceof WeaponCard && card.getName().equals(cardName)) {
+            if (card instanceof WeaponCard && card.getName().equalsIgnoreCase(cardName)) {
                 return true;
             }
         }
@@ -421,7 +417,7 @@ public class Game {
                     // ask player to reveal refutation card
                     String reveal;
                     do {
-                        System.out.print("Reveal Card: ");
+                        System.out.print("Reveal Card(y): ");
                         reveal = sc.nextLine();
 
                     } while (!reveal.equals("y"));

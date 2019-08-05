@@ -24,7 +24,7 @@ public abstract class Card {
      */
     public <T extends Token> T getToken(List<T> tokens){
         for(T token : tokens){
-            if(this.getName().equals(token.getName())){
+            if(this.getName().equalsIgnoreCase(token.getName())){
                 return token;
             }
         }

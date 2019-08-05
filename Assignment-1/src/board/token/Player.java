@@ -215,7 +215,7 @@ public class Player extends Token {
      */
     public <T extends Card> T getCardByName(String name, List<T> cards) {
         for (T card : cards) {
-            if (card.getName().equals(name)) {
+            if (card.getName().equalsIgnoreCase(name)) {
                 return card;
             }
         }
@@ -258,7 +258,8 @@ public class Player extends Token {
     public void printPlayerHand() {
         System.out.print(this.getName() + "'s hand: ");
         for (Card card : this.getHand()) {
-            System.out.print(card.getName() + ", ");
+            System.out.print(card.getName() + " - ");
+
         }
         System.out.println("\n");
 

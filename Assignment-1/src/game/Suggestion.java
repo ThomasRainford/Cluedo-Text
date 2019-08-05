@@ -4,6 +4,9 @@ import cards.CharacterCard;
 import cards.RoomCard;
 import cards.WeaponCard;
 
+/**
+ *
+ */
 public class Suggestion {
     private CharacterCard characterCard;
     private RoomCard roomCard;
@@ -30,31 +33,16 @@ public class Suggestion {
         return characterCard;
     }
 
-    public void setCharacterCard(CharacterCard characterCard) {
-        this.characterCard = characterCard;
-    }
-
     public RoomCard getRoomCard() {
         return roomCard;
-    }
-
-    public void setRoomCard(RoomCard roomCard) {
-        this.roomCard = roomCard;
     }
 
     public WeaponCard getWeaponCard() {
         return weaponCard;
     }
 
-    public void setWeaponCard(WeaponCard weaponCard) {
-        this.weaponCard = weaponCard;
-    }
-
     public boolean isSuggestion() {
         return isSuggestion;
     }
 
-    public void setSuggestion(boolean suggestion) {
-        isSuggestion = suggestion;
-    }
 }
