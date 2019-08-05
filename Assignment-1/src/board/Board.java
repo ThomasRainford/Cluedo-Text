@@ -17,6 +17,33 @@ public class Board {
     private Location[][] board;
     private List<Location> rooms;
 
+    String layout =
+            "=======#======#=========" +
+            "=======##=====###=======" +
+            "=KKKK=##=BBBBBB=##=CCCC=" +
+            "=KKKK=##=BBBBBB=##=CCCC=" +
+            "=KKKK=##=BBBBBB=##=CCCC=" +
+            "=KKKK=###BBBBBB#####====" +
+            "===#==##=BBBBBB=########" +
+            "=#######=#===#==#######=" +
+            "=#################======" +
+            "========##########=IIII=" +
+            "=DDDDDD=###########IIII=" +
+            "=DDDDDD###########=IIII=" +
+            "=DDDDDD=##########===#==" +
+            "=DDDDDD=################" +
+            "=DDDDDD=#########===#===" +
+            "=====#==##########=LLLL=" +
+            "=#################LLLLL=" +
+            "##########==##==##=LLLL=" +
+            "=#########=HHHH=###=====" +
+            "====#===##=HHHH=#######=" +
+            "=OOOOO=###=HHHH=##=#====" +
+            "=OOOOO=###=HHHH=##=SSSS=" +
+            "=OOOOO=###=HHHH=##=SSSS=" +
+            "=OOOOO=###=HHHH=##=SSSS=" +
+            "========#===============E";
+
 
     public Board() {
 
@@ -73,103 +100,92 @@ public class Board {
     }
 
 
-    private File getBoardLayout(String fileName) {
-        return new File(getClass().getClassLoader().getResource(fileName).getFile());
-
-    }
-
-
     /**
      * creates a text-based Cluedo board
      */
     public void setupBoard(List<Player> players, List<Weapon> weapons, int numberPlayers) {
-        File file = getBoardLayout("board-layout.txt");
         rooms = new ArrayList<>();
         int x;
         int y = 0;
+        int index = 0;
 
-        try {
-            Scanner sc = new Scanner(file);
-            while (sc.hasNextLine()) {
-                String ch = sc.nextLine();
-                x = 0;
-                while (x < 24) {
-                    char c = ch.charAt(x);
-                    switch (c) {
-                        case '=':
-                            board[x][y] = new Wall(x, y);
-                            x++;
+        char[] bl = layout.toCharArray();
+        while (bl[index] != 'E') {
+            x = 0;
+            while (x < 24) {
+                char c = bl[index];
+                switch (c) {
+                    case '=':
+                        board[x][y] = new Wall(x, y);
+                        x++;
 
-                            break;
-                        case '#':
-                            board[x][y] = new Hallway(x, y);
-                            x++;
+                        break;
+                    case '#':
+                        board[x][y] = new Hallway(x, y);
+                        x++;
 
-                            break;
-                        case 'K':
-                            board[x][y] = new Room(x, y, "Kitchen");
-                            rooms.add(board[x][y]);
-                            x++;
+                        break;
+                    case 'K':
+                        board[x][y] = new Room(x, y, "Kitchen");
+                        rooms.add(board[x][y]);
+                        x++;
 
-                            break;
-                        case 'B':
-                            board[x][y] = new Room(x, y, "Ball Room");
-                            rooms.add(board[x][y]);
-                            x++;
+                        break;
+                    case 'B':
+                        board[x][y] = new Room(x, y, "Ball Room");
+                        rooms.add(board[x][y]);
+                        x++;
 
-                            break;
-                        case 'C':
-                            board[x][y] = new Room(x, y, "Conservatory");
-                            rooms.add(board[x][y]);
-                            x++;
+                        break;
+                    case 'C':
+                        board[x][y] = new Room(x, y, "Conservatory");
+                        rooms.add(board[x][y]);
+                        x++;
 
-                            break;
-                        case 'D':
-                            board[x][y] = new Room(x, y, "Dining Room");
-                            rooms.add(board[x][y]);
-                            x++;
+                        break;
+                    case 'D':
+                        board[x][y] = new Room(x, y, "Dining Room");
+                        rooms.add(board[x][y]);
+                        x++;
 
-                            break;
-                        case 'I':
-                            board[x][y] = new Room(x, y, "Billiard Room");
-                            rooms.add(board[x][y]);
-                            x++;
+                        break;
+                    case 'I':
+                        board[x][y] = new Room(x, y, "Billiard Room");
+                        rooms.add(board[x][y]);
+                        x++;
 
-                            break;
-                        case 'L':
-                            board[x][y] = new Room(x, y, "Library");
-                            rooms.add(board[x][y]);
-                            x++;
+                        break;
+                    case 'L':
+                        board[x][y] = new Room(x, y, "Library");
+                        rooms.add(board[x][y]);
+                        x++;
 
-                            break;
-                        case 'O':
-                            board[x][y] = new Room(x, y, "Lounge");
-                            rooms.add(board[x][y]);
-                            x++;
+                        break;
+                    case 'O':
+                        board[x][y] = new Room(x, y, "Lounge");
+                        rooms.add(board[x][y]);
+                        x++;
 
-                            break;
-                        case 'H':
-                            board[x][y] = new Room(x, y, "Hall");
-                            rooms.add(board[x][y]);
-                            x++;
+                        break;
+                    case 'H':
+                        board[x][y] = new Room(x, y, "Hall");
+                        rooms.add(board[x][y]);
+                        x++;
 
-                            break;
-                        case 'S':
-                            board[x][y] = new Room(x, y, "Study");
-                            rooms.add(board[x][y]);
-                            x++;
-                            break;
-                    }
+                        break;
+                    case 'S':
+                        board[x][y] = new Room(x, y, "Study");
+                        rooms.add(board[x][y]);
+                        x++;
+                        break;
                 }
-                y++;
+                index++;
             }
-
-        } catch (FileNotFoundException e) {
-            System.out.println(e);
+            y++;
         }
-
         // setup players and weapons
         setPLayerLocations(players, numberPlayers);
+
         setWeaponLocations(weapons);
 
     }
