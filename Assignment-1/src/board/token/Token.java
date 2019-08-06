@@ -21,7 +21,7 @@ public abstract class Token {
      * Set the Tokens Location to location and set the Locations
      * accessible field to false.
      *
-     * @param location
+     * @param location - the location to set
      */
     public void setLocation(Location location) {
         this.location = location;

@@ -199,7 +199,7 @@ class PlayerMovement {
     /**
      * Sets up a game by initialising Tokens and locations
      *
-     * @param game
+     * @param game - the current game
      */
     public void setupGame(Game game){
         game.initialisePlayers(3);

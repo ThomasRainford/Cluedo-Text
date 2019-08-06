@@ -182,7 +182,9 @@ class MainGameFunctions {
     /**
      * Sets up a game by initialising Tokens and locations
      *
-     * @param game
+     * @param game - the current game
+     * @param numberPlayer - the current number of players
+     * @return - the board
      */
     public Board setupGame(Game game, int numberPlayer) {
         game.initialisePlayers(numberPlayer);

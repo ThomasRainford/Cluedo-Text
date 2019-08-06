@@ -197,7 +197,7 @@ public class Player extends Token {
      * Check if the card specified (name) is in the players hand
      *
      * @param name - the name of the card.
-     * @return
+     * @return - if the card is in the players hand
      */
     public boolean isInHand(String name) {
         for (Card c : hand) {
@@ -215,6 +215,7 @@ public class Player extends Token {
      *
      * @param name  - the name of the card
      * @param cards - the list of all the possible cards
+     * @param <T> - a subtype of Card
      * @return - the card found
      */
     public <T extends Card> T getCardByName(String name, List<T> cards) {

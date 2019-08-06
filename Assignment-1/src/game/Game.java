@@ -31,7 +31,7 @@ public class Game {
      * Starts the game
      * Carry's out player turns
      */
-    public void play() {
+    private void play() {
         setupGame();
         Scanner sc = new Scanner(System.in);
         playersTemp = new ArrayList<>();
@@ -109,6 +109,8 @@ public class Game {
      * Rolls the dice.
      * <p>
      * Gets two random number between 1 and 6 then adds them together
+     *
+     * @return - the number generated
      */
     private int rollDice() {
         Random random = new Random();
@@ -122,6 +124,8 @@ public class Game {
     /**
      * Initialise all the player objects and remove a
      * specified number
+     *
+     * @param numberPlayers - the current number of players
      */
     public void initialisePlayers(int numberPlayers) {
         players = new ArrayList<>();
@@ -157,6 +161,8 @@ public class Game {
 
     /**
      * Initialise all the card objects
+     *
+     * @param numberPlayers - the current number of players
      */
     public void initialiseCards(int numberPlayers) {
         cards = new ArrayList<>();
@@ -241,6 +247,8 @@ public class Game {
     /**
      * Assign cards to all players hands
      * Only assign to playable players
+     *
+     * @param numberPlayers - the current number of players
      */
     private void dealCards(int numberPlayers) {
         int playerIndex = 0;
@@ -256,6 +264,11 @@ public class Game {
 
     /**
      * Get the action the player wants to do
+     *
+     * @param player - the player carrying out an action
+     * @param sc - scanner
+     *
+     * @return - the suggestion generated
      */
     private Suggestion getAction(Player player, Scanner sc) {
         // ask player to make Suggestion or accusation

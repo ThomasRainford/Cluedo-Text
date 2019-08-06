@@ -29,7 +29,7 @@ class BoardDrawing {
                 "=KKKK=##=BBBBBB=##=CCCC=\n" +
                 "=KKKK=##=BBBBBB=###CCCl=\n" +
                 "=KKKc=##=BBBBBB=##======\n" +
-                "====#=##=BBBBBd=#######3\n" +
+                "====#=###BBBBBd########3\n" +
                 "########=#====#=#######=\n" +
                 "=#################======\n" +
                 "=====##############IIII=\n" +
@@ -67,30 +67,30 @@ class BoardDrawing {
     public void testInitialBoard_2(){
         String layout =
                 "=========1====2=========\n" +
-                        "=======###=BB=###=======\n" +
-                        "=KKKK=##===BB===##=CCCC=\n" +
-                        "=KKKK=##=BBBBBB=##=CCCC=\n" +
-                        "=KKKK=##=BBBBBB=###CCCl=\n" +
-                        "=KKKc=##=BBBBBB=##======\n" +
-                        "====#=##=BBBBBd=#######3\n" +
-                        "########=#====#=#######=\n" +
-                        "=#################======\n" +
-                        "=====##############IIII=\n" +
-                        "=DDD====##=====###=IIIr=\n" +
-                        "=DDDDDD=##=###=###=IIII=\n" +
-                        "=DDDDDD###=###=###====#=\n" +
-                        "=DDDDDD=##=###=########=\n" +
-                        "=DDDDDr=##=###=###==#===\n" +
-                        "======#=##=###=##==LLLL=\n" +
-                        "=#########=====###LLLLs=\n" +
-                        "#################==LLLL=\n" +
-                        "=########==##==###======\n" +
-                        "=====#=##=HHHH=#########\n" +
-                        "=OOOOO=##=HHHH#########=\n" +
-                        "=OOOOO=##=HHHH=##=#=====\n" +
-                        "=OOOOO=##=HHHH=##=SSSSS=\n" +
-                        "=OOOOO=##=HHHH=##=SSSSS=\n" +
-                        "=======#================\n";
+                "=======###=BB=###=======\n" +
+                "=KKKK=##===BB===##=CCCC=\n" +
+                "=KKKK=##=BBBBBB=##=CCCC=\n" +
+                "=KKKK=##=BBBBBB=###CCCl=\n" +
+                "=KKKc=##=BBBBBB=##======\n" +
+                "====#=###BBBBBd########3\n" +
+                "########=#====#=#######=\n" +
+                "=#################======\n" +
+                "=====##############IIII=\n" +
+                "=DDD====##=====###=IIIr=\n" +
+                "=DDDDDD=##=###=###=IIII=\n" +
+                "=DDDDDD###=###=###====#=\n" +
+                "=DDDDDD=##=###=########=\n" +
+                "=DDDDDr=##=###=###==#===\n" +
+                "======#=##=###=##==LLLL=\n" +
+                "=#########=====###LLLLs=\n" +
+                "#################==LLLL=\n" +
+                "=########==##==###======\n" +
+                "=====#=##=HHHH=#########\n" +
+                "=OOOOO=##=HHHH#########=\n" +
+                "=OOOOO=##=HHHH=##=#=====\n" +
+                "=OOOOO=##=HHHH=##=SSSSS=\n" +
+                "=OOOOO=##=HHHH=##=SSSSS=\n" +
+                "=======#================\n";
 
         Game game = new Game();
         setupGame(game, 3);
@@ -116,7 +116,7 @@ class BoardDrawing {
                 "=KKKK=##=BBBBBB=##=CCCC=\n" +
                 "=KKKK=##=BBBBBB=###CCCl=\n" +
                 "=KKKc=##=BBBBBB=##======\n" +
-                "====#=##=BBBBBd=#######3\n" +
+                "====#=###BBBBBd########3\n" +
                 "########=#====#=#######=\n" +
                 "=#################======\n" +
                 "=====##############IIII=\n" +
@@ -163,7 +163,7 @@ class BoardDrawing {
                 "=KKKK=##=BBBBBB=##=CCCC=\n" +
                 "=KKKK=##=BBBBBB=###CCCl=\n" +
                 "=KKKc=##=BBBBBB=##======\n" +
-                "====#=##=BBBBBd=#######3\n" +
+                "====#=###BBBBBd########3\n" +
                 "########=1====#=#######=\n" +
                 "=#################======\n" +
                 "=====##############IIII=\n" +
@@ -208,7 +208,7 @@ class BoardDrawing {
                 "=KKKK=##=BBBBBB=##=CCCC=\n" +
                 "=KKKK=##=BBBBBB=###CCCl=\n" +
                 "=KKKK=##=BBBBBB=##======\n" +
-                "====#=##=1BBBBd=########\n" +
+                "====#=###1BBBBd#########\n" +
                 "########=#====#=#######=\n" +
                 "=#################======\n" +
                 "=====##############IIII=\n" +
@@ -263,33 +263,6 @@ class BoardDrawing {
      */
     @Test
     public void testSuggestedTokenMovement_2(){
-        String layout1 =
-                "=======#======2=========\n" +
-                "=======##=====###=======\n" +
-                "=KKKK=##=BBBBBB=##=CCCC=\n" +
-                "=KKKK=##=BBBBBB=##=CCCC=\n" +
-                "=KKKK=##=BBBBBB=##=CCC9=\n" +
-                "=KKK7=###BBBBBB#####====\n" +
-                "===#==##=BBBBB8=#######3\n" +
-                "=#######=#===#==#######=\n" +
-                "=#################======\n" +
-                "========##########=IIII=\n" +
-                "=DDDDDD=###########IIII=\n" +
-                "=DDDDDD###########=IIII=\n" +
-                "=DDDDDD=##########===#==\n" +
-                "=DDDDDD=###############4\n" +
-                "=DDDDD10=#########===#===\n" +
-                "=====#==##########=LLLL=\n" +
-                "=#################LLLL12=\n" +
-                "##########==##==##=LLLL=\n" +
-                "=#########=1611H=###=====\n" +
-                "====#===##=HHHH=#######=\n" +
-                "=OOOOO=###=HHHH=##=#====\n" +
-                "=OOOOO=###=HHHH=##=SSSS=\n" +
-                "=OOOOO=###=HHHH=##=SSSS=\n" +
-                "=OOOOO=###=HHHH=##=SSSS=\n" +
-                "========5===============\n";
-
         String layout =
                 "=========#====2=========\n" +
                 "=======###=BB=###=======\n" +
@@ -297,7 +270,7 @@ class BoardDrawing {
                 "=KKKK=##=BBBBBB=##=CCCC=\n" +
                 "=KKKK=##=BBBBBB=###CCCl=\n" +
                 "=KKKc=##=BBBBBB=##======\n" +
-                "====#=##=BBBBBd=#######3\n" +
+                "====#=###BBBBBd########3\n" +
                 "########=#====#=#######=\n" +
                 "=#################======\n" +
                 "=====##############IIII=\n" +
@@ -350,7 +323,10 @@ class BoardDrawing {
     /**
      * Sets up a game by initialising Tokens and locations
      *
-     * @param game
+     * @param game - the current game
+     * @param numberPlayer - number of players on the board
+     *
+     * @return - Board
      */
     public Board setupGame(Game game, int numberPlayer){
         game.initialisePlayers(numberPlayer);
@@ -363,6 +339,8 @@ class BoardDrawing {
 
     /**
      * Initialises all Weapon Tokens
+     *
+     * @param game - the current game
      */
     public void initialiseWeapons(Game game) {
         game.setWeapons(new ArrayList<>());
@@ -381,6 +359,7 @@ class BoardDrawing {
      * Returns a List of all the Locations of the Weapon
      * Tokens in there initial positions
      *
+     * @param board - the array of locations
      * @return - A List of Locations
      */
     public List<Location> allWeaponLocations(Location[][] board) {
@@ -400,7 +379,8 @@ class BoardDrawing {
      * Assign Weapons to locations and assign locations to Weapons
      * and set the Weapons token.
      *
-     * @param weapons
+     * @param weapons - the weapons on the board
+     * @param game - the current game
      */
     public void setWeaponLocations(List<Weapon> weapons, Game game) {
         List<Location> locations = allWeaponLocations(game.getBoard().getBoard());
@@ -415,6 +395,8 @@ class BoardDrawing {
      *
      * @param weapon   - weapon to be setup
      * @param location - location to assign to weapon
+     * @param token - the current weapons token
+     *
      */
     public void setupWeapon(Weapon weapon, Location location, String token) {
         weapon.setLocation(location);
@@ -425,7 +407,12 @@ class BoardDrawing {
 
 
     /**
-     * creates a text-based Cluedo board
+     *
+     * @param players - all current players on the board
+     * @param numberPlayers - current number of players
+     * @param layout - the layout string of the board
+     * @param board - the current board
+     * @param game - the current game
      */
     public void setupBoard(List<Player> players, int numberPlayers, String layout, Location[][] board, Game game) {
         game.getBoard().setRooms(new ArrayList<>());
@@ -516,8 +503,9 @@ class BoardDrawing {
     /**
      * Assign Players to locations and assign locations to Players
      * and set the Players tokens
-     *
      * @param players List of players that will be playable
+     * @param numberPlayers - the current number of players
+     * @param board - the current board
      */
     public void setPLayerLocations(List<Player> players, int numberPlayers, Location[][] board) {
         List<Location> locations = allPlayerLocations(board);
@@ -532,6 +520,7 @@ class BoardDrawing {
      *
      * @param player   - player to be setup
      * @param location - location to assign to player
+     * @param token - the current players token
      */
     public void setupPlayer(Player player, Location location, String token) {
         player.setLocation(location);
@@ -544,6 +533,7 @@ class BoardDrawing {
      * Gets a list of all the possible initial locations
      * for all the players
      *
+     * @param board the array of locations
      * @return List of Location's
      */
     public List<Location> allPlayerLocations(Location[][] board) {
@@ -566,6 +556,7 @@ class BoardDrawing {
      * @param player   - the player to be Moved
      * @param goToRoom - the Room to move the player too.
      * @param players  - the list of all players on the board.
+     * @param game - the current game
      */
     public void movePlayerToRoom(Player player, Room goToRoom, List<Player> players, Game game) {
         if (players.contains(player)) {
@@ -586,6 +577,7 @@ class BoardDrawing {
      *
      * @param weapon   - the player to be Moved
      * @param goToRoom - the Room to move the player too.
+     * @param game - the current game
      */
     public void moveWeaponToRoom(Weapon weapon, Room goToRoom, Game game) {
         for (Location room : game.getBoard().getRooms()) {
@@ -605,7 +597,8 @@ class BoardDrawing {
      * @param weapon - the weapon token to be moved
      * @param x      - the x co- ordinate on the board
      * @param y      - the y co-ordinate on the board
-     * @return
+     * @param board - the array of locations
+     * @return - if weapon was moved or not.
      */
     public boolean moveWeapon(Weapon weapon, int x, int y, Location[][] board) {
         if (board[x][y].isAccessible() && board[x][y].isRoom()) {
@@ -631,6 +624,7 @@ class BoardDrawing {
      * @param player - the player moving
      * @param x      - x co-ordinate to move too
      * @param y      - y x co-ordinate to move too
+     * @param board - the array of locations
      * @return - if the move was valid
      */
     public boolean movePlayer(Player player, int x, int y, Location[][] board) {

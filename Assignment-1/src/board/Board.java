@@ -79,7 +79,7 @@ public class Board {
      * @param weapon - the weapon token to be moved
      * @param x      - the x co- ordinate on the board
      * @param y      - the y co-ordinate on the board
-     * @return
+     * @return - if the weapon was moved or not
      */
     public boolean moveWeapon(Weapon weapon, int x, int y) {
         if (board[x][y].isAccessible() && board[x][y].isRoom()) {
@@ -98,6 +98,10 @@ public class Board {
 
     /**
      * creates a text-based Cluedo board
+     *
+     * @param players - the players
+     * @param weapons - the weapons
+     * @param numberPlayers - the number of players
      */
     public void setupBoard(List<Player> players, List<Weapon> weapons, int numberPlayers) {
         rooms = new ArrayList<>();
@@ -233,6 +237,7 @@ public class Board {
      * and set the Players tokens
      *
      * @param players List of players that will be playable
+     * @param numberPlayers - the current number of players
      */
     public void setPLayerLocations(List<Player> players, int numberPlayers) {
         List<Location> locations = allPlayerLocations();
@@ -246,7 +251,7 @@ public class Board {
      * Assign Weapons to locations and assign locations to Weapons
      * and set the Weapons token.
      *
-     * @param weapons
+     * @param weapons - the weapons on the board
      */
     public void setWeaponLocations(List<Weapon> weapons) {
         List<Location> locations = allWeaponLocations();
@@ -262,6 +267,7 @@ public class Board {
      *
      * @param player   - player to be setup
      * @param location - location to assign to player
+     * @param token - a players token
      */
     public void setupPlayer(Player player, Location location, String token) {
         player.setLocation(location);
@@ -277,6 +283,7 @@ public class Board {
      *
      * @param weapon   - weapon to be setup
      * @param location - location to assign to weapon
+     * @param token - a players token
      */
     public void setupWeapon(Weapon weapon, Location location, String token) {
         weapon.setLocation(location);
