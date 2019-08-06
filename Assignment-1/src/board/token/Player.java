@@ -1,6 +1,7 @@
 package board.token;
 
 import board.Board;
+import board.Hallway;
 import board.Location;
 import cards.Card;
 import game.Game;
@@ -101,6 +102,7 @@ public class Player extends Token {
     public void doPlayerRoomMoves(Board board, Scanner sc, int numberMoves) {
         String direction;
         do {
+            System.out.println(this.getName() + " is in a Room. (q) to make suggestion or accusation (w)(a)(s)(d) to move about the room\n");
             direction = printMoveInformation(sc);
             getMoveDirection(direction, this.getLocation(), board);
             board.printBoard();
@@ -147,7 +149,9 @@ public class Player extends Token {
                 break;
 
         }
-        turnLocations.add(current);
+        if(current instanceof Hallway) {
+            turnLocations.add(current);
+        }
     }
 
 
@@ -197,7 +201,7 @@ public class Player extends Token {
      */
     public boolean isInHand(String name) {
         for (Card c : hand) {
-            if (c.getName().equals(name)) {
+            if (c.getName().equalsIgnoreCase(name)) {
                 return true;
             }
         }
@@ -231,10 +235,10 @@ public class Player extends Token {
      */
     private String printMoveInformation(Scanner sc) {
         this.printPlayerHand();
-        System.out.print("Direction: ");
+        System.out.print("Direction ('w' for up)('a' for left)('s' for down)('d' for right) : ");
         String direction = sc.nextLine();
         Game.clearConsole();
-        System.out.println("-------" + this.getName() + "-------");
+        System.out.println("-------" + this.getName() + "-------\n");
         didMove = false;
         stopMoves = false;
 
@@ -256,9 +260,9 @@ public class Player extends Token {
      * Prints a specified players hand
      */
     public void printPlayerHand() {
-        System.out.print(this.getName() + "'s hand: ");
+        System.out.print(this.getName() + "'s hand: \n");
         for (Card card : this.getHand()) {
-            System.out.print(card.getName() + " - ");
+            System.out.print("- " + card.getName() + "\n");
 
         }
         System.out.println("\n");

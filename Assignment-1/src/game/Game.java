@@ -42,28 +42,26 @@ public class Game {
         while (!won) {
             for (Player player : players) {
                 player.printEndOfTurn();
-                System.out.println("\n" + player.getName() + "'s turn " + "(" + player.getToken() + ")");
-
-                System.out.println("Move with wasd. Stop with 'q'");
+                System.out.println(player.getName() + "'s turn " + "(" + player.getToken() + ")\n");
 
                 // ask player to roll the rice then carry out the players moves
                 String answer;
                 do {
-                    System.out.print("\nRoll Dice?(r): ");
+                    System.out.print("Roll Dice?(r):");
                     answer = sc.next();
 
                 } while (!answer.equals("r"));
-
+                //Game.clearConsole();
                 board.printBoard();
 
                 int diceValue = rollDice();
-                System.out.println("Dice Roll: " + diceValue);
+                System.out.println("Dice Roll: " + diceValue + "\n");
 
                 player.doPlayerMoves(board, diceValue);
 
                 // check if player is in a room
                 if (player.getLocation().isRoom()) {
-                    System.out.println(player.getName() + " is in a Room.\n");
+                    System.out.println(player.getName() + " is in a Room. (q) to make suggestion or accusation\n");
                     Suggestion action = getAction(player, sc);
 
                     // user made an suggestion
@@ -80,7 +78,7 @@ public class Game {
                 }
             }
         }
-        System.out.println("\n" + winner.getName() + " has won!");
+        System.out.println(winner.getName() + " has won!\n");
         printMurder();
     }
 
@@ -91,8 +89,6 @@ public class Game {
      * i.e. The number of players
      */
     public void setupGame() {
-        printGuide();
-
         Scanner sc = new Scanner(System.in);
         int numberPlayers;
         do {
@@ -106,24 +102,6 @@ public class Game {
         board.setupBoard(players, weapons, numberPlayers);
         initialiseCards(numberPlayers);
         board.printBoard();
-    }
-
-
-    /**
-     * Prints the guide on how to play the game
-     */
-    public void printGuide(){
-        System.out.println("Text-based Cluedo\n");
-        System.out.println("- First role the dice with 'r'");
-        System.out.println("- Move character with wasd, and stop with 'q'\n");
-        System.out.println("Weapon Tokens:");
-        System.out.println("7: Candlestick");
-        System.out.println("8: Dagger");
-        System.out.println("9: Lead Pipe");
-        System.out.println("10: Revolver");
-        System.out.println("11: Rope");
-        System.out.println("12: Spanner");
-        System.out.println("\nTo begin enter the number of players\n");
     }
 
 
@@ -173,6 +151,7 @@ public class Game {
         weapons.add(new Weapon("Revolver", null));
         weapons.add(new Weapon("Rope", null));
         weapons.add(new Weapon("Spanner", null));
+        Collections.shuffle(weapons);
     }
 
 
@@ -213,18 +192,8 @@ public class Game {
         Collections.shuffle(cards);
         allCards.addAll(cards);
 
-        System.out.println("ALL CARDS:");
-        for (Card card : allCards) {
-            System.out.print(card.getName() + " ");
-        }
-
         // set the murder cards and deal remaining cards
         setMurder();
-        System.out.print("MURDER: ");
-        for (Card card : murder) {
-            System.out.print(card.getName() + " ");
-        }
-        System.out.println();
         dealCards(numberPlayers);
     }
 
@@ -292,7 +261,7 @@ public class Game {
         // ask player to make Suggestion or accusation
         String action;
         do {
-            System.out.print("Suggestion or Accusation: ");
+            System.out.print("Suggestion or Accusation (s) or (a) : ");
             action = sc.next();
 
         } while (!action.equals("s") && !action.equals("a"));
@@ -558,9 +527,6 @@ public class Game {
         }
     }
 
-
-
-    /* Getter and Setters */
 
     public void setPlayers(List<Player> players) {
         this.players = players;

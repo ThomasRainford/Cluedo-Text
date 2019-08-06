@@ -1,6 +1,9 @@
 package board;
 
 import board.token.Token;
+import board.token.Weapon;
+
+import java.util.List;
 
 public abstract class Location {
 
@@ -17,6 +20,7 @@ public abstract class Location {
         this.token = token;
         this.accessible = accessible;
     }
+
 
     /**
      * Checks if specified location is a Room

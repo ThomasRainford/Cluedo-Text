@@ -40,11 +40,11 @@ class PlayerMovement {
         setupGame(game);
         Player player = game.getPlayers().get(0);
 
-        b.movePlayer(player, 9, 2);
-        b.movePlayer(player, 10, 2);
+        b.movePlayer(player, 11, 1);
+        b.movePlayer(player, 12, 1);
 
         b.printBoard();
-        assertEquals(board[10][2], player.getLocation());
+        assertEquals(board[12][1], player.getLocation());
     }
 
 
@@ -59,10 +59,10 @@ class PlayerMovement {
         setupGame(game);
         Player player = game.getPlayers().get(0);
 
-        b.movePlayer(player, 6, 0);
+        b.movePlayer(player, 10, 0);
 
         b.printBoard();
-        assertEquals(board[7][0], player.getLocation());
+        assertEquals(board[9][0], player.getLocation());
     }
 
 
@@ -77,11 +77,11 @@ class PlayerMovement {
         setupGame(game);
         Player player = game.getPlayers().get(0);
 
-        b.movePlayer(player, 1, 2);
-        b.movePlayer(player, 0,2);
+        b.movePlayer(player, 11,1);
+        b.movePlayer(player, 10, 1);
 
         b.printBoard();
-        assertEquals(board[1][2], player.getLocation());
+        assertEquals(board[11][1], player.getLocation());
     }
 
 
@@ -117,11 +117,11 @@ class PlayerMovement {
         setupGame(game);
         Player player = game.getPlayers().get(0);
 
-        b.movePlayer(player, 7, 0);
-        b.movePlayer(player, 7, -1);
+        b.movePlayer(player, 9, 0);
+        b.movePlayer(player, 9, -1);
 
         b.printBoard();
-        assertEquals(board[7][0], player.getLocation());
+        assertEquals(board[9][0], player.getLocation());
     }
 
 
@@ -137,14 +137,14 @@ class PlayerMovement {
         setupGame(game);
         Player player = game.getPlayers().get(0);
 
-        b.movePlayer(player, 8, 5);
-        b.movePlayer(player, 9, 5);
+        b.movePlayer(player, 9, 6);
+        b.movePlayer(player, 9, 7);
 
         b.printBoard();
-        assertEquals(board[9][5], player.getLocation());
+        assertEquals(board[9][7], player.getLocation());
 
-        b.movePlayer(player, 8, 5);
-        assertEquals(board[8][5], player.getLocation());
+        b.movePlayer(player, 9, 6);
+        assertEquals(board[9][6], player.getLocation());
     }
 
 

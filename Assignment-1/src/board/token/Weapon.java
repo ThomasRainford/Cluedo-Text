@@ -33,4 +33,8 @@ public class Weapon extends Token {
     public void setToken(String token) {
         this.token = token;
     }
+
+    public String getChar() {
+        return this.getName().toLowerCase().substring(0, 1);
+    }
 }

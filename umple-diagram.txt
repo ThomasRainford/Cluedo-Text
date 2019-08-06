@@ -1,0 +1,199 @@
+//Unable to update umple code due to error at [6,15]
+//Unable to update umple code due to error at [5,15]
+//Unable to update umple code due to error at [4,15]
+class Game
+{
+   0..1 -- 0..1 Board;
+  0..3 -- 0..6 Player;
+  0..1 -- * Card;
+  }
+
+class Board
+{
+  * -- * Location;
+  List rooms;
+  String layout;
+  }
+
+class Location
+{
+  int x;
+  int y;
+  String name;
+  Token token;
+  boolean accessible;
+ 
+}
+
+class Room
+{
+  
+    isA Location;
+String name;
+  }
+
+class Token
+{
+  String name;
+  Location location;
+  String token;
+}
+
+class Card
+{
+  String name;
+}
+
+class WeaponCard
+{
+  isA Card;
+}
+
+class CharacterCard
+{
+  isA Card;
+  }
+
+class RoomCard
+{
+  isA Card;
+}
+
+class Suggestion
+{
+  0..1 -- 0..1 RoomCard;
+    0..1 -- 0..1 CharacterCard;
+    0..1 -- 0..1 WeaponCard;
+  boolean isSuggestion;
+}
+
+
+
+class Hallway
+{
+  isA Location;
+}
+
+class Wall
+{
+  isA Location;
+}
+
+class Player
+{
+  isA Token;
+}
+
+class Weapon
+{
+  isA Token;
+}
+
+class Game
+{
+  position 55 52 109 41;
+  position.association Board__Game 32,58 23,0;
+  position.association Game__Token 139,58 34,0;
+  position.association Game__Suggestion 109,33 0,7;
+  position.association Card__Game 181,1 0,0;
+  }
+
+class Board
+{
+  position 60 185 109 41;
+  position.association Board__Game 47,0 50,41;
+  position.association Board__Location 35,75 45,0;
+  }
+
+class Location
+{
+  position 65 312 154 126;
+  position.association Room__Location 109,12 0,12;
+}
+
+class Room
+{
+  position 16 493 112 41;
+  position.association Room__Location 0,12 109,12;
+}
+
+class Token
+{
+  position 292 210 143 92;
+  position.association Token__Location 0,40 73,0;
+  position.association Token__Suggestion 194,22 0,28;
+  position.association Card__Token 82,0 0,20;
+}
+
+class Card
+{
+  position 706 90 109 41;
+  position.association Card__Game 0,30 109,23;
+  position.association Card__Token 0,33 81,0;
+}
+
+class WeaponCard
+{
+  position 820 271 109 41;
+  position.association Suggestion__WeaponCard 45,0 109,20;
+}
+
+class CharacterCard
+{
+  position 708 270 109 41;
+  position.association CharacterCard__Suggestion 27,0 109,35;
+  }
+
+class RoomCard
+{
+  position 595 271 109 41;
+  position.association RoomCard__Suggestion 36,0 62,41;
+}
+
+class Suggestion
+{
+  position 432 144 172 58;
+  position.association Suggestion__WeaponCard 172,33 33,0;
+  position.association RoomCard__Suggestion 103,58 14,0;
+  position.association CharacterCard__Suggestion 172,55 17,0;
+}
+
+class Hallway
+{
+  position 241 490 109 41;
+}
+
+class Wall
+{
+  position 130 491 109 41;
+}
+
+class Player
+{
+  position 274 344 109 41;
+}
+
+class Weapon
+{
+  position 391 343 109 41;
+}//$?[End_of_model]$?
+
+class Hallway
+{
+  position 241 490 109 41;
+}
+
+class Wall
+{
+  position 130 491 109 41;
+}
+
+class Player
+{
+  position 274 344 109 41;
+}
+
+class Weapon
+{
+  position 391 343 109 41;
+}

@@ -4,6 +4,7 @@ import board.token.Player;
 import board.token.Weapon;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Board {
@@ -13,32 +14,32 @@ public class Board {
     private Location[][] board;
     private List<Location> rooms;
 
-    String layout =
-            "=======#======#=========" +
-            "=======##=====###=======" +
-            "=KKKK=##=BBBBBB=##=CCCC=" +
-            "=KKKK=##=BBBBBB=##=CCCC=" +
-            "=KKKK=##=BBBBBB=##=CCCC=" +
-            "=KKKK=###BBBBBB#####====" +
-            "===#==##=BBBBBB=########" +
-            "=#######=#===#==#######=" +
-            "=#################======" +
-            "========##########=IIII=" +
-            "=DDDDDD=###########IIII=" +
-            "=DDDDDD###########=IIII=" +
-            "=DDDDDD=##########===#==" +
-            "=DDDDDD=################" +
-            "=DDDDDD=#########===#===" +
-            "=====#==##########=LLLL=" +
-            "=#################LLLLL=" +
-            "##########==##==##=LLLL=" +
-            "=#########=HHHH=###=====" +
-            "====#===##=HHHH=#######=" +
-            "=OOOOO=###=HHHH=##=#====" +
-            "=OOOOO=###=HHHH=##=SSSS=" +
-            "=OOOOO=###=HHHH=##=SSSS=" +
-            "=OOOOO=###=HHHH=##=SSSS=" +
-            "========#===============E";
+    private String layout =
+            "=========#====#=========" +
+                    "=======###=BB=###=======" +
+                    "=KKKK=##===BB===##=CCCC=" +
+                    "=KKKK=##=BBBBBB=##=CCCC=" +
+                    "=KKKK=##=BBBBBB=###CCCC=" +
+                    "=KKKK=##=BBBBBB=##======" +
+                    "====#=##=BBBBBB=########" +
+                    "########=#====#=#######=" +
+                    "=#################======" +
+                    "=====##############IIII=" +
+                    "=DDD====##=====###=IIII=" +
+                    "=DDDDDD=##=###=###=IIII=" +
+                    "=DDDDDD###=###=###====#=" +
+                    "=DDDDDD=##=###=########=" +
+                    "=DDDDDD=##=###=###==#===" +
+                    "======#=##=###=##==LLLL=" +
+                    "=#########=====###LLLLL=" +
+                    "#################==LLLL=" +
+                    "=########==##==###======" +
+                    "=====#=##=HHHH=#########" +
+                    "=OOOOO=##=HHHH#########=" +
+                    "=OOOOO=##=HHHH=##=#=====" +
+                    "=OOOOO=##=HHHH=##=SSSSS=" +
+                    "=OOOOO=##=HHHH=##=SSSSS=" +
+                    "=======#================E";
 
 
     public Board() {
@@ -194,11 +195,11 @@ public class Board {
      */
     public List<Location> allPlayerLocations() {
         List<Location> locations = new ArrayList<>();
-        locations.add(board[7][0] = new Hallway(7, 0));
+        locations.add(board[9][0] = new Hallway(9, 0));
         locations.add(board[14][0] = new Hallway(14, 0));
         locations.add(board[23][6] = new Hallway(23, 6));
-        locations.add(board[23][13] = new Hallway(23, 13));
-        locations.add(board[8][24] = new Hallway(8, 24));
+        locations.add(board[23][19] = new Hallway(23, 19));
+        locations.add(board[7][24] = new Hallway(7, 24));
         locations.add(board[0][17] = new Hallway(0, 17));
 
         return locations;
@@ -213,13 +214,16 @@ public class Board {
      */
     public List<Location> allWeaponLocations() {
         List<Location> locations = new ArrayList<>();
-        locations.add(board[4][5] = new Room(4, 5, "Kitchen"));
-        locations.add(board[14][6] = new Room(14, 6, "Ball Room"));
+        locations.add(board[1][2] = new Room(1, 2, "Kitchen"));
+        locations.add(board[14][6] = new Room(12, 3, "Ball Room"));
         locations.add(board[22][4] = new Room(22, 3, "Conservatory"));
-        locations.add(board[6][14] = new Room(6, 14, "Dining Room"));
+        locations.add(board[1][14] = new Room(6, 14, "Dining Room"));
         locations.add(board[22][10] = new Room(22, 10, "Billiard Room"));
-        locations.add(board[22][16] = new Room(22, 16, "Lounge"));
-
+        locations.add(board[2][23] = new Room(2, 23, "Lounge"));
+        locations.add(board[22][16] = new Room(22, 16, "Library"));
+        locations.add(board[22][23] = new Room(22, 23, "Study"));
+        locations.add(board[11][23] = new Room(11, 23, "Hall"));
+        Collections.shuffle(locations);
         return locations;
     }
 
@@ -247,7 +251,7 @@ public class Board {
     public void setWeaponLocations(List<Weapon> weapons) {
         List<Location> locations = allWeaponLocations();
         for (int i = 0; i < Weapon.NUM_WEAPONS; i++) {
-            setupWeapon(weapons.get(i), locations.get(i), String.valueOf(i + 7));
+            setupWeapon(weapons.get(i), locations.get(i), weapons.get(i).getChar()); //String.valueOf(i + 7)
         }
     }
 
@@ -290,47 +294,47 @@ public class Board {
             for (int x = 0; x < 24; x++) {
                 Location location = board[x][y];
                 if (location instanceof Wall) {
-                    System.out.print("=");
+                    System.out.print("= ");
 
                 } else if (location instanceof Hallway) {
                     // check for a player. Print player token or hallway token.
                     if (location.getToken() != null) {
-                        System.out.print(location.getToken().getToken());
+                        System.out.print(location.getToken().getToken()+ " ");
 
                     } else {
-                        System.out.print("#");
+                        System.out.print("  ");
                     }
 
                     // check for a player in a Room
                 } else if (location instanceof Room && location.getToken() != null) {
-                    System.out.print(location.getToken().getToken());
+                    System.out.print(location.getToken().getToken()+ " ");
 
                 } else if (location.getName().equals("Kitchen")) {
-                    System.out.print("K");
+                    System.out.print("K ");
 
                 } else if (location.getName().equals("Ball Room")) {
-                    System.out.print("B");
+                    System.out.print("B ");
 
                 } else if (location.getName().equals("Conservatory")) {
-                    System.out.print("C");
+                    System.out.print("C ");
 
                 } else if (location.getName().equals("Dining Room")) {
-                    System.out.print("D");
+                    System.out.print("D ");
 
                 } else if (location.getName().equals("Billiard Room")) {
-                    System.out.print("I");
+                    System.out.print("I ");
 
                 } else if (location.getName().equals("Library")) {
-                    System.out.print("L");
+                    System.out.print("L ");
 
                 } else if (location.getName().equals("Lounge")) {
-                    System.out.print("O");
+                    System.out.print("O ");
 
                 } else if (location.getName().equals("Hall")) {
-                    System.out.print("H");
+                    System.out.print("H ");
 
                 } else if (location.getName().equals("Study")) {
-                    System.out.print("S");
+                    System.out.print("S ");
 
                 }
             }
@@ -339,8 +343,6 @@ public class Board {
     }
 
     /**
-     * Used for testing.
-     *
      * @return - the board as a String
      */
     public String getBoardAsString() {
@@ -466,5 +468,11 @@ public class Board {
         this.board = board;
     }
 
+    public String getLayout() {
+        return layout;
+    }
 
+    public void setLayout(String layout) {
+        this.layout = layout;
+    }
 }
