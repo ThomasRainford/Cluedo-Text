@@ -339,6 +339,8 @@ public class Board {
     }
 
     /**
+     * Used for testing.
+     *
      * @return - the board as a String
      */
     public String getBoardAsString() {

@@ -176,7 +176,7 @@ public class Player extends Token {
      */
     public boolean isSuggestionCard(Suggestion suggestion, String name) {
         for (Card c : hand) {
-            if (c.getName().equals(name)) {
+            if (c.getName().equalsIgnoreCase(name)) {
                 String ccName = suggestion.getCharacterCard().getName();
                 String rcName = suggestion.getRoomCard().getName();
                 String wcName = suggestion.getWeaponCard().getName();

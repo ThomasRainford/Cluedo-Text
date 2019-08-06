@@ -16,6 +16,7 @@ import java.util.*;
 public class Game {
 
     private List<Player> players;
+    private List<Player> allPlayers;     // all Players. Including players who have lost.
     private List<Weapon> weapons;
     private List<Card> cards;            // cards in play
     private List<Card> allCards;         // all cards including murder cards
@@ -34,12 +35,16 @@ public class Game {
         setupGame();
         Scanner sc = new Scanner(System.in);
         playersTemp = new ArrayList<>();
+        allPlayers = new ArrayList<>();
+        allPlayers.addAll(players);
 
         boolean won = false;
         while (!won) {
             for (Player player : players) {
                 player.printEndOfTurn();
                 System.out.println("\n" + player.getName() + "'s turn " + "(" + player.getToken() + ")");
+
+                System.out.println("Move with wasd. Stop with 'q'");
 
                 // ask player to roll the rice then carry out the players moves
                 String answer;
@@ -86,6 +91,8 @@ public class Game {
      * i.e. The number of players
      */
     public void setupGame() {
+        printGuide();
+
         Scanner sc = new Scanner(System.in);
         int numberPlayers;
         do {
@@ -99,6 +106,24 @@ public class Game {
         board.setupBoard(players, weapons, numberPlayers);
         initialiseCards(numberPlayers);
         board.printBoard();
+    }
+
+
+    /**
+     * Prints the guide on how to play the game
+     */
+    public void printGuide(){
+        System.out.println("Text-based Cluedo\n");
+        System.out.println("- First role the dice with 'r'");
+        System.out.println("- Move character with wasd, and stop with 'q'\n");
+        System.out.println("Weapon Tokens:");
+        System.out.println("7: Candlestick");
+        System.out.println("8: Dagger");
+        System.out.println("9: Lead Pipe");
+        System.out.println("10: Revolver");
+        System.out.println("11: Rope");
+        System.out.println("12: Spanner");
+        System.out.println("\nTo begin enter the number of players\n");
     }
 
 
@@ -388,7 +413,7 @@ public class Game {
      */
     private void doRefutation(Player player, Suggestion action, Scanner sc) {
         // ask each player to refute if they can
-        for (Player refuter : players) {
+        for (Player refuter : allPlayers) {
             if (refuter != player) {
 
                 String response;
@@ -421,7 +446,7 @@ public class Game {
                         reveal = sc.nextLine();
 
                     } while (!reveal.equals("y"));
-                    System.out.println(refutationCard);
+                    System.out.println(player.getCardByName(refutationCard, cards).getName());
 
                     delay();
 
@@ -433,12 +458,20 @@ public class Game {
                         response1 = sc.nextLine();
 
                     } while (!response1.equals("ok"));
+                    delay();
+                    Game.clearConsole();
                 }
             }
         }
     }
 
 
+    /**
+     * Returns a list which doesn't contain 'player'
+     *
+     * @param player - the player the list won't contain
+     * @return - List of players not containing 'player'
+     */
     public List<Player> incorrectAccusation(Player player) {
         System.out.println("Incorrect Accusation!");
         playersTemp.addAll(players);
@@ -450,6 +483,15 @@ public class Game {
     }
 
 
+    /**
+     * Checks of 'player' made a correct accusation. Return true.
+     * Otherwise return false.
+     *
+     * @param action - the accusation
+     * @param player - the player who made the accusation
+     * @return - boolean value representing if the player made the correct
+     * accusation or not.
+     */
     public boolean doAccusation(Suggestion action, Player player) {
         boolean won;
         if (correctAccusation(action)) { // user made correct accusation so has won
@@ -516,6 +558,9 @@ public class Game {
         }
     }
 
+
+
+    /* Getter and Setters */
 
     public void setPlayers(List<Player> players) {
         this.players = players;

@@ -32,6 +32,7 @@ public abstract class Card {
     }
 
 
+
     /* Getters and Setters */
 
     public String getName() {

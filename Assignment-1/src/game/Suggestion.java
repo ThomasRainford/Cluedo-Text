@@ -21,6 +21,8 @@ public class Suggestion {
     }
 
 
+    /* Print methods */
+
     public void printSuggestion(){
         System.out.println("\nSuggestion: " + characterCard.getName() + " "
                 + roomCard.getName() + " " + weaponCard.getName());

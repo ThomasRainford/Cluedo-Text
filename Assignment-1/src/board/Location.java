@@ -21,7 +21,7 @@ public abstract class Location {
     /**
      * Checks if specified location is a Room
      *
-     * @return
+     * @return - if this is a Room or not.
      */
     public boolean isRoom() {
         return this instanceof Room;
